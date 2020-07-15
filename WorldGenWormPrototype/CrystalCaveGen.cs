@@ -5,7 +5,16 @@ using Terraria;
 
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveGen : WormGen {
-		public CrystalCaveGen( int tileX, int tileY ) : base( tileX, tileY, 150, 200 ) { }
+		public static CrystalCaveGen Create( int tileX, int tileY ) {
+			int length = WorldGen.genRand.Next( 100, 200 );
+			return new CrystalCaveGen( tileX, tileY, length );
+		}
+
+
+
+		////////////////
+
+		private CrystalCaveGen( int tileX, int tileY, int length ) : base( tileX, tileY, length ) { }
 
 
 		////////////////
@@ -46,7 +55,8 @@ namespace WorldGenWormPrototype {
 
 		private WormNode CreateNextCrystaCaveNode( WormSystemGen wormSys, int radius ) {
 			int tests = 14;
-			int tilePadding = 6;
+			int tilePadding = 8;
+
 			WormNode currNode = this.KeyNodes[ this.KeyNodes.Count - 1 ];
 
 			var testNodes = new List<WormNode>( tests );

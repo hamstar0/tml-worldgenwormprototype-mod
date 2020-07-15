@@ -33,10 +33,10 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		public WormGen( int tileX, int tileY, int minNodes, int maxNodes ) {
+		public WormGen( int tileX, int tileY, int totalNodes ) {
 			this.OriginTileX = tileX;
 			this.OriginTileY = tileY;
-			this.TotalNodes = WorldGen.genRand.Next( minNodes, maxNodes );
+			this.TotalNodes = totalNodes;
 		}
 
 

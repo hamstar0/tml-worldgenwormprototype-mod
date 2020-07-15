@@ -1,9 +1,13 @@
-v1
+v0.5
 -	Add crystal generation
+v0.4
 -	Add water cave forks
+v0.3
 -	Add another worm (runs concurrent with other worm)
 
+v0.2
 -	Refactor code for better OOP
+v0.1
 -	Reduce size of worm generated caves
 -	Add worm border
 -	Implement basic worm behavior

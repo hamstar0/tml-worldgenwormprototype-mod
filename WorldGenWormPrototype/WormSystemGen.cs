@@ -36,9 +36,9 @@ namespace WorldGenWormPrototype {
 					if( interpNodes.Count > 0 ) {
 						this.Nodes = this.Nodes.Union( interpNodes ).ToList();
 					}
-
-					progress.Value += progStep;
 				}
+
+				progress.Value += progStep;
 			} while( genWormDefs.Count > 0 );
 		}
 
