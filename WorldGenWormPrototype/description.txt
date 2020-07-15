@@ -1,1 +1,1 @@
-World Gen Worm Prototype is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+World Gen Worm Prototype implements a world gen prototype for worm-like caves. Comes with a preset example for "crystal caves".

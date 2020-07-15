@@ -1,12 +1,13 @@
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.World.Generation;
 
 
 namespace WorldGenWormPrototype {
-	public abstract partial class WormGen {
-		public void PaintNodePath( GenerationProgress progress, float thisProgress ) {
+	public abstract partial class WormSystemGen : IEnumerable<WormNode> {
+		public void PaintNodes( GenerationProgress progress, float thisProgress ) {
 			float progressUnit = (float)thisProgress / (float)this.Nodes.Count;
 
 			for( int i = 0; i < this.Nodes.Count; i++ ) {

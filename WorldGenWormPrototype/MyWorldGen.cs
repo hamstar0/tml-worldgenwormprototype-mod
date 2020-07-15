@@ -28,8 +28,8 @@ namespace WorldGenWormPrototype {
 			int tileX = WorldGen.genRand.Next( pad, Main.maxTilesX - pad );
 			int tileY = WorldGen.genRand.Next( (int)Main.worldSurface + pad, (Main.maxTilesY - 200) - pad );
 
-			WormGen wormGen = new CrystalCaveWormGen( progress, 0.5f, tileX, tileY );
-			wormGen.PaintNodePath( progress, 0.5f );
+			WormSystemGen wormSys = CrystalCaveSystemGen.Create( progress, 0.5f, tileX, tileY );
+			wormSys.PaintNodes( progress, 0.5f );
 
 			progress.Set( 1f );
 		}
