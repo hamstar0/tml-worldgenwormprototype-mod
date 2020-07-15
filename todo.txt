@@ -1,0 +1,9 @@
+v1
+-	Add crystal generation
+-	Add water cave forks
+-	Add another worm (runs concurrent with other worm)
+
+-	Refactor code for better OOP
+-	Reduce size of worm generated caves
+-	Add worm border
+-	Implement basic worm behavior
