@@ -2,6 +2,7 @@ v0.5
 -	Add crystal generation
 v0.4
 -	Add water cave forks
+-	Add fork options
 v0.3
 -	Add another worm (runs concurrent with other worm)
 
