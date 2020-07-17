@@ -2,7 +2,6 @@ v0.5
 -	Add crystal generation
 v0.4
 -	Add water cave forks
--	Add fork options
 
 -	Add forks
 v0.3

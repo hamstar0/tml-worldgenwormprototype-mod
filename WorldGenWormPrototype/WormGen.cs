@@ -71,7 +71,7 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		public bool GenerateNextKeyNode( WormSystemGen wormSystem, out WormGen fork ) {
+		public virtual bool GenerateNextKeyNode( WormSystemGen wormSystem, out WormGen fork ) {
 			if( this.KeyNodes.Count >= this.TotalNodes ) {
 				fork = null;
 				return false;
@@ -80,7 +80,14 @@ namespace WorldGenWormPrototype {
 			WormNode nextNode = this.CreateKeyNode( wormSystem );
 			this.KeyNodes.Add( nextNode );
 
-			this.Forks.TryGetValue( this.KeyNodes.Count - 1, out fork );
+			if( this.Forks.TryGetValue(this.KeyNodes.Count - 1, out fork) ) {
+				fork.OriginTileX = nextNode.TileX;
+				fork.OriginTileY = nextNode.TileY;
+
+				WormNode forkHeadNode = fork.CreateKeyNode( wormSystem );
+				fork.KeyNodes.Add( forkHeadNode );
+			}
+
 			return true;
 		}
 
