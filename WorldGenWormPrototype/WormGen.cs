@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 
 
@@ -23,20 +24,36 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
+		protected IList<WormNode> KeyNodes = new List<WormNode>();
+
+		protected IDictionary<int, WormGen> _Forks;
+
+
+		////////////////
+
 		public int OriginTileX { get; private set; }
+
 		public int OriginTileY { get; private set; }
+
 		public int TotalNodes { get; private set; }
 
-		protected IList<WormNode> KeyNodes = new List<WormNode>();
+		public IReadOnlyDictionary<int, WormGen> Forks { get; private set; }
 
 
 
 		////////////////
 
-		public WormGen( int tileX, int tileY, int totalNodes ) {
+		public WormGen( int tileX, int tileY, int totalNodes, IList<WormGen> randomForks ) {
 			this.OriginTileX = tileX;
 			this.OriginTileY = tileY;
 			this.TotalNodes = totalNodes;
+
+			this._Forks = new Dictionary<int, WormGen>( randomForks.Count );
+			this.Forks = new ReadOnlyDictionary<int, WormGen>( this._Forks );
+
+			for( int i=0; i<randomForks.Count; i++ ) {
+				this._Forks[ WorldGen.genRand.Next(0, totalNodes) ] = randomForks[i];
+			}
 		}
 
 
@@ -49,6 +66,26 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		public abstract bool GenerateNextKeyNode( WormSystemGen wormSystem );
+		public abstract int CalculateFurthestNodeDepth();
+
+
+		////////////////
+
+		public bool GenerateNextKeyNode( WormSystemGen wormSystem, out WormGen fork ) {
+			if( this.KeyNodes.Count >= this.TotalNodes ) {
+				fork = null;
+				return false;
+			}
+
+			WormNode nextNode = this.CreateKeyNode( wormSystem );
+			this.KeyNodes.Add( nextNode );
+
+			this.Forks.TryGetValue( this.KeyNodes.Count - 1, out fork );
+			return true;
+		}
+
+		////
+
+		protected abstract WormNode CreateKeyNode( WormSystemGen wormSystem );
 	}
 }

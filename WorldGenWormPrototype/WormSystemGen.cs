@@ -23,13 +23,17 @@ namespace WorldGenWormPrototype {
 
 		public WormSystemGen( GenerationProgress progress, float thisProgress, IList<WormGen> wormDefs ) {
 			var genWormDefs = new HashSet<WormGen>( wormDefs );
-			int maxNodes = wormDefs.Max( wg => wg.TotalNodes );
+			int maxNodes = wormDefs.Max( wg => wg.CalculateFurthestNodeDepth() );
 			float progStep = thisProgress / (float)maxNodes;
 
 			do {
 				foreach( WormGen wormDef in genWormDefs.ToArray() ) {
-					if( !wormDef.GenerateNextKeyNode(this) ) {
+					if( !wormDef.GenerateNextKeyNode(this, out WormGen fork) ) {
 						genWormDefs.Remove( wormDef );
+					}
+
+					if( fork != null ) {
+						genWormDefs.Add( fork );
 					}
 
 					IList<WormNode> interpNodes = wormDef.CreateInterpolatedNodesFromRecentNodes();

@@ -5,19 +5,39 @@ using Terraria;
 
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveGen : WormGen {
-		public CrystalCaveGen( int tileX, int tileY, int length ) : base( tileX, tileY, length ) { }
+		public const int MinNormalRadius = 3;
+		public const int MaxNormalRadius = 12;
+
 
 
 		////////////////
 
-		public override bool GenerateNextKeyNode( WormSystemGen wormSys ) {
-			if( this.KeyNodes.Count >= this.TotalNodes ) {
-				return false;
+		public static CrystalCaveGen Create( int tileX, int tileY, int length, int forkCount ) {
+			var randForks = new List<WormGen>( forkCount );
+			for( int i=0; i<forkCount; i++ ) {
+				int randLen = WorldGen.genRand.Next( length / 8, length / 4 );
+				CrystalCaveGen fork = new CrystalCaveForkGen( 0, 0, randLen );
+
+				randForks.Add( fork );
 			}
 
+			return new CrystalCaveGen( tileX, tileY, length, randForks );
+		}
+
+
+
+		////////////////
+		
+		protected CrystalCaveGen( int tileX, int tileY, int length, IList<WormGen> randForks )
+					: base( tileX, tileY, length, randForks ) { }
+
+
+		////////////////
+
+		protected override WormNode CreateKeyNode( WormSystemGen wormSys ) {
 			int radius;
-			int minWidth = 3;
-			int maxWidth = 12;
+			int minWidth = CrystalCaveGen.MinNormalRadius;
+			int maxWidth = CrystalCaveGen.MaxNormalRadius;
 
 			if( this.KeyNodes.Count <= 2 ) {
 				radius = WorldGen.genRand.Next( (int)( (float)maxWidth * 1.5f ), maxWidth * 3 ); // start fat
@@ -33,18 +53,16 @@ namespace WorldGenWormPrototype {
 			if( this.KeyNodes.Count == 0 ) {
 				newNode = new WormNode { TileX = this.OriginTileX, TileY = this.OriginTileY, Radius = radius };
 			} else {
-				newNode = this.CreateNextCrystaCaveNode( wormSys, radius );
+				newNode = this.CreateNextCrystalCaveKeyNode( wormSys, radius );
 			}
 
-			this.KeyNodes.Add( newNode );
-
-			return true;
+			return newNode;
 		}
 
 
 		////////////////
 
-		private WormNode CreateNextCrystaCaveNode( WormSystemGen wormSys, int radius ) {
+		private WormNode CreateNextCrystalCaveKeyNode( WormSystemGen wormSys, int radius ) {
 			int tests = 14;
 			int tilePadding = 8;
 
@@ -67,6 +85,20 @@ namespace WorldGenWormPrototype {
 			}
 
 			return bestNode;
+		}
+
+
+		////////////////
+
+		public override int CalculateFurthestNodeDepth() {
+			int largest = this.TotalNodes;
+			foreach( KeyValuePair<int, WormGen> kv in this._Forks ) {
+				if( (kv.Key + kv.Value.TotalNodes) > largest ) {
+					largest = kv.Key + kv.Value.TotalNodes;
+				}
+			}
+
+			return largest;
 		}
 
 

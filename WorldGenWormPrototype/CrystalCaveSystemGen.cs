@@ -11,9 +11,13 @@ namespace WorldGenWormPrototype {
 			int len1 = WorldGen.genRand.Next( 50, totalLength - 50 );
 			int len2 = totalLength - len1;
 
+			int totalForks = WorldGen.genRand.Next( 4, 8 );
+			int forks1 = WorldGen.genRand.Next( 2, totalForks );
+			int forks2 = totalForks - forks1;
+
 			var wormDefs = new List<WormGen> {
-				new CrystalCaveGen( tileX, tileY, len1 ),
-				new CrystalCaveGen( tileX, tileY, len2 ),
+				CrystalCaveGen.Create( tileX, tileY, len1, forks1 ),
+				CrystalCaveGen.Create( tileX, tileY, len2, forks2 ),
 			};
 
 			return new CrystalCaveSystemGen( progress, thisProgress, wormDefs );
