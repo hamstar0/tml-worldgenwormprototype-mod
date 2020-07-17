@@ -28,7 +28,65 @@ namespace WorldGenWormPrototype {
 		////////////////
 
 		private CrystalCaveSystemGen( GenerationProgress progress, float thisProgress, IList<WormGen> wormDefs )
-					: base( progress, thisProgress, wormDefs ) {
+					: base( progress, thisProgress * 0.75f, thisProgress * 0.25f, wormDefs ) {
+		}
+
+
+		////////////////
+
+		protected override bool PostProcessNodes(
+					GenerationProgress progress,
+					float postProcessProgress,
+					out ISet<WormGen> newWorms ) {
+			WormNode bottomNode = this.FindBestBottomNode();
+		}
+
+
+		////////////////
+
+		public WormNode FindBestBottomNode() {
+			int leftMostX = Main.maxTilesX - 1;
+			int rightMostX = 0;
+			int topMostY = Main.maxTilesY - 1;
+			int bottomMostY = 0;
+
+			foreach( WormNode node in this.Nodes ) {
+				if( node.TileX > rightMostX ) {
+					rightMostX = node.TileX;
+				}
+				if( node.TileX < leftMostX ) {
+					leftMostX = node.TileX;
+				}
+				if( node.TileY < topMostY ) {
+					topMostY = node.TileY;
+				}
+				if( node.TileY > bottomMostY ) {
+					bottomMostY = node.TileY;
+				}
+			}
+
+			WormNode bestNode = null;
+			float bestValue = 0f;
+
+			float rangeX = rightMostX - leftMostX;
+			float rangeY = bottomMostY - topMostY;
+
+			foreach( WormNode node in this.Nodes ) {
+				float percX = (float)(node.TileX - leftMostX) / rangeX;
+				float percMidX = 0.5f - Math.Abs( 0.5f - percX );
+				percMidX *= 2f;
+
+				float percY = (float)(node.TileY - topMostY) / rangeY;
+
+				float value = percMidX + (percY * 2f);
+
+				if( value > bestValue ) {
+					bestValue = value;
+					bestNode = node;
+				}
+			}
+
+			return bestNode;
 		}
 	}
 }

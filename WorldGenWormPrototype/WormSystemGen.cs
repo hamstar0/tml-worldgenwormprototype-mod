@@ -21,19 +21,35 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		public WormSystemGen( GenerationProgress progress, float thisProgress, IList<WormGen> wormDefs ) {
-			var genWormDefs = new HashSet<WormGen>( wormDefs );
-			int maxNodes = wormDefs.Max( wg => wg.CalculateFurthestNodeDepth() );
+		public WormSystemGen(
+					GenerationProgress progress,
+					float thisProgress,
+					float postProcessProgress,
+					IList<WormGen> wormDefs ) {
+			ISet<WormGen> genWormDefs = new HashSet<WormGen>( wormDefs );
+
+			this.GenerateNodes( progress, thisProgress, genWormDefs );
+
+			if( this.PostProcessNodes(progress, postProcessProgress, out genWormDefs) ) {
+				this.GenerateNodes( progress, postProcessProgress, genWormDefs );
+			}
+		}
+
+		////
+
+		private void GenerateNodes( GenerationProgress progress, float thisProgress, ISet<WormGen> worms ) {
+			int maxNodes = worms.Max( wg => wg.CalculateFurthestNodeDepth() );
 			float progStep = thisProgress / (float)maxNodes;
 
 			do {
-				foreach( WormGen wormDef in genWormDefs.ToArray() ) {
+				foreach( WormGen wormDef in worms.ToArray() ) {
 					if( !wormDef.GenerateNextKeyNode(this, out WormGen fork) ) {
-						genWormDefs.Remove( wormDef );
+						worms.Remove( wormDef );
+						continue;
 					}
 
 					if( fork != null ) {
-						genWormDefs.Add( fork );
+						worms.Add( fork );
 					}
 
 					IList<WormNode> interpNodes = wormDef.CreateInterpolatedNodesFromRecentNodes();
@@ -43,7 +59,7 @@ namespace WorldGenWormPrototype {
 				}
 
 				progress.Value += progStep;
-			} while( genWormDefs.Count > 0 );
+			} while( worms.Count > 0 );
 		}
 
 
@@ -52,5 +68,16 @@ namespace WorldGenWormPrototype {
 		IEnumerator IEnumerable.GetEnumerator() => this.Nodes.GetEnumerator();
 
 		public IEnumerator<WormNode> GetEnumerator() => this.Nodes.GetEnumerator();
+
+
+		////////////////
+		
+		protected virtual bool PostProcessNodes(
+					GenerationProgress progress,
+					float postProcessProgress,
+					out ISet<WormGen> newWorms ) {
+			newWorms = null;
+			return false;
+		}
 	}
 }
