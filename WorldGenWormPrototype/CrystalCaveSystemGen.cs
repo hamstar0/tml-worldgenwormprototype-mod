@@ -6,6 +6,12 @@ using Terraria.World.Generation;
 
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveSystemGen : WormSystemGen {
+		public const int PuddleLength = 6;
+
+
+
+		////////////////
+
 		public static CrystalCaveSystemGen Create( GenerationProgress progress, float thisProgress, int tileX, int tileY ) {
 			int totalLength = WorldGen.genRand.Next( 150, 200 );
 			int len1 = WorldGen.genRand.Next( 50, totalLength - 50 );
@@ -39,6 +45,16 @@ namespace WorldGenWormPrototype {
 					float postProcessProgress,
 					out ISet<WormGen> newWorms ) {
 			WormNode bottomNode = this.FindBestBottomNode();
+
+			newWorms = new HashSet<WormGen> {
+				CrystalCavePuddleGen.Create(
+					tileX: bottomNode.TileX,
+					tileY: bottomNode.TileY,
+					length: CrystalCaveSystemGen.PuddleLength,
+					forkCount: WorldGen.genRand.Next( 2, 4 )
+				)
+			};
+			return true;
 		}
 
 

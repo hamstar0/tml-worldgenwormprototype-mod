@@ -1,3 +1,5 @@
+v0.6
+-	Add surface truncation
 v0.5
 -	Add crystal generation
 v0.4

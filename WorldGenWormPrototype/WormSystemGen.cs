@@ -38,7 +38,7 @@ namespace WorldGenWormPrototype {
 		////
 
 		private void GenerateNodes( GenerationProgress progress, float thisProgress, ISet<WormGen> worms ) {
-			int maxNodes = worms.Max( wg => wg.CalculateFurthestNodeDepth() );
+			int maxNodes = worms.Max( wg => wg.CalculateFurthestKeyNode() );
 			float progStep = thisProgress / (float)maxNodes;
 
 			do {

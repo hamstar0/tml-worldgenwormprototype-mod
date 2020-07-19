@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -32,7 +31,7 @@ namespace WorldGenWormPrototype {
 				int y = prevNode.TileY + (int)(yDist * perc);
 				int rad = (int)MathHelper.Lerp( (float)prevNode.Radius, (float)currNode.Radius, (float)perc );
 
-				nodes.Add( new WormNode { TileX = x, TileY = y, Radius = rad } );
+				nodes.Add( new WormNode(x, y, rad, this) );
 			}
 
 			nodes.Add( currNode );

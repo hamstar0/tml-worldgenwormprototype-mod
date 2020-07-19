@@ -7,22 +7,28 @@ namespace WorldGenWormPrototype {
 	public partial class CrystalCaveGen : WormGen {
 		protected override WormNode CreateKeyNode( WormSystemGen wormSys ) {
 			int radius;
-			int minWidth = CrystalCaveGen.MinNormalRadius;
-			int maxWidth = CrystalCaveGen.MaxNormalRadius;
-
-			if( this.KeyNodes.Count <= 2 ) {
-				radius = WorldGen.genRand.Next( (int)( (float)maxWidth * 1.5f ), maxWidth * 3 ); // start fat
+			int minRad = CrystalCaveGen.MinNormalRadius;
+			int maxRad = CrystalCaveGen.MaxNormalRadius;
+			int startRange = CrystalCaveGen.StartRadiusInterpolateLength;	//2
+			int endRange = CrystalCaveGen.EndRadiusInterpolateLength;   //5
+			
+			if( this.KeyNodes.Count >= (this.TotalNodes - endRange) ) {
+				float range = (endRange + 1) - (this.TotalNodes - this.KeyNodes.Count);
+				radius = (int)( (float)minRad / range );  // taper
+			} else if( this.KeyNodes.Count <= startRange ) {
+				float startMinRadScale = (float)startRange * 0.75f;
+				radius = WorldGen.genRand.Next(
+					(int)((float)maxRad * startMinRadScale),
+					(int)((float)maxRad * startMinRadScale * 2f)
+				); // start fat
 				radius /= this.KeyNodes.Count + 1;
-			} else if( this.KeyNodes.Count >= (this.TotalNodes - 5) ) {
-				float range = 6 - (this.TotalNodes - this.KeyNodes.Count);
-				radius = (int)( (float)minWidth / (float)range );  // taper
 			} else {
-				radius = WorldGen.genRand.Next( minWidth, maxWidth );
+				radius = WorldGen.genRand.Next( minRad, maxRad );
 			}
 
 			WormNode newNode;
 			if( this.KeyNodes.Count == 0 ) {
-				newNode = new WormNode { TileX = this.OriginTileX, TileY = this.OriginTileY, Radius = radius };
+				newNode = new WormNode( this.OriginTileX, this.OriginTileY, radius, this );
 			} else {
 				newNode = this.CreateNextCrystalCaveKeyNode( wormSys, radius );
 			}
@@ -36,12 +42,13 @@ namespace WorldGenWormPrototype {
 			int tilePadding = 8;
 
 			WormNode currNode = this.KeyNodes[ this.KeyNodes.Count - 1 ];
+
 			var testNodes = this.CreateTestNodes( tests, radius, currNode );
 
 			WormNode bestNode = null;
 			float prevGauged = -1f;
 			foreach( WormNode testNode in testNodes ) {
-				float gauged = this.GaugeCrystalCaveNode( wormSys, testNode, tilePadding );
+				float gauged = this.GaugeCrystalCaveNode( wormSys, testNode, currNode, tilePadding );
 				if( prevGauged != -1 && gauged > prevGauged ) { continue; }
 
 				prevGauged = gauged;
@@ -58,7 +65,7 @@ namespace WorldGenWormPrototype {
 			var testNodes = new List<WormNode>( count );
 
 			for( int i = 0; i < count; i++ ) {
-				WormNode testNode = WormGen.CreateTestNode( currNode, radius );
+				WormNode testNode = this.CreateTestNode( currNode, radius );
 				testNodes.Add( testNode );
 			}
 

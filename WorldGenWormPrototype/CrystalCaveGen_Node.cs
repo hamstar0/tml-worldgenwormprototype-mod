@@ -5,7 +5,7 @@ using Terraria;
 
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveGen : WormGen {
-		public override int CalculateFurthestNodeDepth() {
+		public override int CalculateFurthestKeyNode() {
 			int largest = this.TotalNodes;
 			foreach( KeyValuePair<int, WormGen> kv in this._Forks ) {
 				if( (kv.Key + kv.Value.TotalNodes) > largest ) {
@@ -19,15 +19,15 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		protected virtual float GaugeCrystalCaveNode( WormSystemGen wormSys, WormNode node, float tilePadding ) {
+		protected virtual float GaugeCrystalCaveNode( WormSystemGen wormSys, WormNode testNode, WormNode prevNode, float tilePadding ) {
 			float gauged = 0f;
 
 			foreach( WormNode existingNode in wormSys ) {
-				float value = (float)existingNode.GetDistance( node );
+				float value = (float)existingNode.GetDistance( testNode );
 
-				value -= existingNode.Radius + node.Radius + tilePadding;
+				value -= existingNode.Radius + testNode.Radius + tilePadding;
 				if( value < 0f ) {
-					value = 100000 - value;
+					value = 100000 - value;	// too close penalty
 				}
 
 				gauged += value;

@@ -7,23 +7,6 @@ using Terraria;
 
 namespace WorldGenWormPrototype {
 	public abstract partial class WormGen : IEnumerable<WormNode> {
-		public static WormNode CreateTestNode( WormNode prevNode, int radius ) {
-			float randDir = WorldGen.genRand.NextFloat() * (float)Math.PI * 2f;
-			double dist = radius + prevNode.Radius;
-			double x = Math.Cos( randDir ) * dist;
-			double y = Math.Sin( randDir ) * dist;
-
-			return new WormNode {
-				TileX = (int)x + prevNode.TileX,
-				TileY = (int)y + prevNode.TileY,
-				Radius = radius
-			};
-		}
-
-
-
-		////////////////
-
 		protected IList<WormNode> KeyNodes = new List<WormNode>();
 
 		protected IDictionary<int, WormGen> _Forks;
@@ -66,7 +49,7 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		public abstract int CalculateFurthestNodeDepth();
+		public abstract int CalculateFurthestKeyNode();
 
 
 		////////////////
@@ -91,8 +74,29 @@ namespace WorldGenWormPrototype {
 			return true;
 		}
 
+
 		////
 
 		protected abstract WormNode CreateKeyNode( WormSystemGen wormSystem );
+
+
+		protected WormNode CreateTestNode( WormNode prevNode, int radius ) {
+			float randDir = WorldGen.genRand.NextFloat() * (float)Math.PI * 2f;
+			double dist = radius + prevNode.Radius;
+			double x = Math.Cos( randDir ) * dist;
+			double y = Math.Sin( randDir ) * dist;
+
+			return new WormNode(
+				tileX: (int)x + prevNode.TileX,
+				tileY: (int)y + prevNode.TileY,
+				radius: radius,
+				parent: this
+			);
+		}
+
+
+		////////////////
+
+		public virtual void PostPaintTile( WormNode node, int i, int j ) { }
 	}
 }
