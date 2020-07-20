@@ -29,9 +29,10 @@ namespace WorldGenWormPrototype {
 				double perc = i / dist;
 				int x = prevNode.TileX + (int)(xDist * perc);
 				int y = prevNode.TileY + (int)(yDist * perc);
-				int rad = (int)MathHelper.Lerp( (float)prevNode.Radius, (float)currNode.Radius, (float)perc );
+				int rad = (int)MathHelper.Lerp( (float)prevNode.TileRadius, (float)currNode.TileRadius, (float)perc );
+				int space = (int)MathHelper.Lerp( (float)prevNode.NodeSpacing, (float)currNode.NodeSpacing, (float)perc );
 
-				nodes.Add( new WormNode(x, y, rad, this) );
+				nodes.Add( new WormNode(x, y, rad, space, this) );
 			}
 
 			nodes.Add( currNode );

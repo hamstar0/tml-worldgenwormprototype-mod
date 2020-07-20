@@ -9,10 +9,9 @@ namespace WorldGenWormPrototype {
 			var randForks = new List<WormGen>( forkCount );
 
 			for( int i = 0; i < forkCount; i++ ) {
-				int randLen = WorldGen.genRand.Next(
-					Math.Max( length / 8, 2 ),
-					Math.Max( length / 4, 3 )
-				);
+				int min = Math.Max( length / 8, 2 );
+				int max = Math.Max( length / 4, Math.Max(min+1, 3) );
+				int randLen = WorldGen.genRand.Next( min, max );
 
 				CrystalCaveGen fork = new CrystalCaveForkGen( 0, 0, randLen, new List<WormGen>() );
 
@@ -39,7 +38,7 @@ namespace WorldGenWormPrototype {
 			WormNode newNode = base.CreateKeyNode( wormSys );
 
 			if( this.KeyNodes.Count <= 2 ) {
-				newNode.Radius = WorldGen.genRand.Next( minWidth, maxWidth );
+				newNode.TileRadius = WorldGen.genRand.Next( minWidth, maxWidth );
 			}
 
 			return newNode;

@@ -6,7 +6,8 @@ namespace WorldGenWormPrototype {
 	public class WormNode {
 		public int TileX;
 		public int TileY;
-		public int Radius;
+		public int TileRadius;
+		public int NodeSpacing;
 
 		protected WormGen Parent;
 
@@ -14,10 +15,11 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		public WormNode( int tileX, int tileY, int radius, WormGen parent ) {
+		public WormNode( int tileX, int tileY, int tileRadius, int nodeSpacing, WormGen parent ) {
 			this.TileX = tileX;
 			this.TileY = tileY;
-			this.Radius = radius;
+			this.TileRadius = tileRadius;
+			this.NodeSpacing = nodeSpacing;
 			this.Parent = parent;
 		}
 
@@ -31,7 +33,7 @@ namespace WorldGenWormPrototype {
 		////////////////
 
 		public virtual void Paint( Func<float, float> scale, Func<int, int, bool> painter ) {
-			float rad = scale( this.Radius );
+			float rad = scale( this.TileRadius );
 			int radSqr = (int)( rad * rad );
 			int minX = this.TileX - (int)rad;
 			int maxX = this.TileX + (int)rad;

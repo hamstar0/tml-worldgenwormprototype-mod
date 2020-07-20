@@ -30,7 +30,7 @@ namespace WorldGenWormPrototype {
 
 
 		////////////////
-		
+
 		protected CrystalCaveGen( int tileX, int tileY, int length, IList<WormGen> randForks )
 					: base( tileX, tileY, length, randForks ) { }
 	}

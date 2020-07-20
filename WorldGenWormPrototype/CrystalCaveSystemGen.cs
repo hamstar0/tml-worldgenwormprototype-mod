@@ -6,7 +6,7 @@ using Terraria.World.Generation;
 
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveSystemGen : WormSystemGen {
-		public const int PuddleLength = 6;
+		public const int PuddleLength = 8;
 
 
 
