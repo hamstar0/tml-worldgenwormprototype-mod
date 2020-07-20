@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveSystemGen : WormSystemGen {
-		protected override bool PaintTileInner( int i, int j ) {
+		protected override bool PaintTileInner( int i, int j, float percToEdge ) {
 			Tile t = Framing.GetTileSafely( i, j );
 			bool changed = t.active() || t.wall != WallID.GraniteUnsafe || t.liquid > 0;
 
@@ -15,7 +15,7 @@ namespace WorldGenWormPrototype {
 			return changed;
 		}
 
-		protected override bool PaintTileOuter( int i, int j ) {
+		protected override bool PaintTileOuter( int i, int j, float percToEdge ) {
 			Tile t = Framing.GetTileSafely( i, j );
 			bool changed = !t.active()
 					|| t.type != TileID.Granite

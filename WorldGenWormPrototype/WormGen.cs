@@ -51,7 +51,7 @@ namespace WorldGenWormPrototype {
 
 		public abstract int CalculateFurthestKeyNode();
 
-		protected abstract void CalculateRadiusAndPadding( out int tileRadius, out int nodeSpacing );
+		protected abstract void CalculateNextRadiusAndNodeSpacing( out int tileRadius, out int nodeSpacing );
 
 
 		////////////////
@@ -69,7 +69,7 @@ namespace WorldGenWormPrototype {
 				fork.OriginTileX = nextNode.TileX;
 				fork.OriginTileY = nextNode.TileY;
 
-				WormNode forkHeadNode = fork.CreateKeyNode( wormSystem );
+				WormNode forkHeadNode = fork.CreateForkedKeyNode( wormSystem, nextNode );
 				fork.KeyNodes.Add( forkHeadNode );
 			}
 
@@ -81,6 +81,15 @@ namespace WorldGenWormPrototype {
 
 		protected abstract WormNode CreateKeyNode( WormSystemGen wormSystem );
 
+		protected virtual WormNode CreateForkedKeyNode( WormSystemGen wormSystem, WormNode templateNode ) {
+			WormNode node = this.CreateKeyNode( wormSystem );
+
+			node.TileRadius = templateNode.TileRadius;
+			node.NodeSpacing = templateNode.NodeSpacing;
+			return node;
+		}
+
+		////
 
 		protected WormNode CreateTestNode( WormNode prevNode, int tileRadius, int nodeSpacing ) {
 			float randDir = WorldGen.genRand.NextFloat() * (float)Math.PI * 2f;

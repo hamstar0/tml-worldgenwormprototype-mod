@@ -4,14 +4,14 @@ using Terraria;
 
 
 namespace WorldGenWormPrototype {
-	public partial class CrystalCavePuddleGen : CrystalCaveForkGen {
+	public partial class CrystalCavePuddleGen : CrystalCaveGen {
 		public static new CrystalCavePuddleGen Create( int tileX, int tileY, int length, int forkCount = 0 ) {
 			var randForks = new List<WormGen>( forkCount );
 
 			for( int i = 0; i < forkCount; i++ ) {
-				int randLen = WorldGen.genRand.Next( 2, 3 );
+				int randLen = WorldGen.genRand.Next( 2, 6 );
 
-				CrystalCaveGen fork = CrystalCaveForkGen.Create( 0, 0, randLen );
+				var fork = CrystalCaveGen.Create( 0, 0, randLen, 0 );
 
 				randForks.Add( fork );
 			}
@@ -24,7 +24,7 @@ namespace WorldGenWormPrototype {
 		////////////////
 
 		protected CrystalCavePuddleGen( int tileX, int tileY, int length, IList<WormGen> forks )
-					: base( tileX, tileY, length, forks ) { }
+					: base( tileX, tileY, length, forks, CrystalCaveGen.MinNormalRadius, CrystalCaveGen.MaxNormalRadius, 0, length ) { }
 
 
 		////////////////
@@ -42,6 +42,16 @@ namespace WorldGenWormPrototype {
 			horizGauge *= 10;
 
 			return gauged + vertGauge + horizGauge;
+		}
+
+
+		////////////////
+
+		protected override WormNode CreateForkedKeyNode( WormSystemGen wormSystem, WormNode templateNode ) {
+			WormNode node = base.CreateForkedKeyNode( wormSystem, templateNode );
+
+			node.TileRadius = (int)((float)node.TileRadius * 1.5f);
+			return node;
 		}
 
 

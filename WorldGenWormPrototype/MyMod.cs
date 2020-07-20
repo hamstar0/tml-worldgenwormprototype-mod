@@ -26,7 +26,7 @@ namespace WorldGenWormPrototype {
 
 	public class WGWWorld : ModWorld {
 		public override void ModifyWorldGenTasks( List<GenPass> tasks, ref float totalWeight ) {
-			int idx = tasks.FindIndex( t => t.Name == "Settle Liquids Again" ); //Terrain
+			int idx = tasks.FindIndex( t => t.Name == "Underworld" ); //Terrain
 			if( idx == -1 ) {
 				idx = 1;
 			}

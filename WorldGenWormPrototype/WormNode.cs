@@ -32,7 +32,7 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		public virtual void Paint( Func<float, float> scale, Func<int, int, bool> painter ) {
+		public virtual void Paint( Func<float, float> scale, Func<int, int, float, bool> painter ) {
 			float rad = scale( this.TileRadius );
 			int radSqr = (int)( rad * rad );
 			int minX = this.TileX - (int)rad;
@@ -55,7 +55,9 @@ namespace WorldGenWormPrototype {
 					}
 
 					if( i >= 0 && i < Main.maxTilesX && j >= 0 && j < Main.maxTilesY ) {
-						if( painter(i, j) ) {
+						float perc = (float)distSqr / (float)radSqr;
+
+						if( painter(i, j, perc) ) {
 							this.Parent.PostPaintTile( this, i, j );
 						}
 					}

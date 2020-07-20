@@ -17,31 +17,39 @@ namespace WorldGenWormPrototype {
 		}
 
 
-		protected override void CalculateRadiusAndPadding( out int radius, out int padding ) {
-			int minRad = CrystalCaveGen.MinNormalRadius;
-			int maxRad = CrystalCaveGen.MaxNormalRadius;
-			int startRange = CrystalCaveGen.StartRadiusInterpolateLength;   //2
-			int endRange = CrystalCaveGen.EndRadiusInterpolateLength;   //5
+		protected override void CalculateNextRadiusAndNodeSpacing( out int radius, out int padding ) {
+			int startRange = this.StartNodeCount;   //2
+			int endRange = this.EndNodeCount;   //5
 			int remainingNodes = this.TotalNodes - this.KeyNodes.Count;
 
-			padding = WorldGen.genRand.Next( minRad, maxRad );
+			padding = WorldGen.genRand.Next( this.MinRadius, this.MaxRadius );
 
 			if( this.KeyNodes.Count >= (this.TotalNodes - endRange) ) {
-				float radStep = minRad / (float)remainingNodes;
+				float radStep = this.MinRadius / (float)remainingNodes;
 				int steps = (endRange + 1) - remainingNodes;
 
-				radius = minRad - (int)(radStep * (float)steps);  // taper
+				radius = this.MinRadius - (int)( radStep * (float)steps );  // taper
 				return;
 			}
 
-			if( this.KeyNodes.Count <= startRange ) {
+			if( startRange > 0 && this.KeyNodes.Count == 0 ) {
 				float startMinRadScale = (float)startRange * 0.75f;
 
 				radius = WorldGen.genRand.Next( // start fat
-					(int)( (float)maxRad * startMinRadScale ),
-					(int)( (float)maxRad * startMinRadScale * 2f )
+					(int)( (float)this.MaxRadius * startMinRadScale ),
+					(int)( (float)this.MaxRadius * startMinRadScale * 2f )
 				);
 				radius /= this.KeyNodes.Count + 1;
+				return;
+			}
+
+			if( startRange > 0 && this.KeyNodes.Count <= startRange ) {
+				int max = this.KeyNodes[ this.KeyNodes.Count - 1 ].TileRadius;
+				int min = this.MaxRadius;
+				float step = (float)(max - min) / (float)startRange;
+
+				radius = max - (int)(step * this.KeyNodes.Count);
+				padding = radius;
 				return;
 			}
 

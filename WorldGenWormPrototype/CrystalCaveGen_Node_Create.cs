@@ -5,26 +5,26 @@ using System.Collections.Generic;
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveGen : WormGen {
 		protected override WormNode CreateKeyNode( WormSystemGen wormSys ) {
-			this.CalculateRadiusAndPadding( out int radius, out int padding );
+			this.CalculateNextRadiusAndNodeSpacing( out int radius, out int nodeSpacing );
 
 			WormNode newNode;
 			if( this.KeyNodes.Count == 0 ) {
-				newNode = new WormNode( this.OriginTileX, this.OriginTileY, radius, padding, this );
+				newNode = new WormNode( this.OriginTileX, this.OriginTileY, radius, nodeSpacing, this );
 			} else {
-				newNode = this.CreateNextCrystalCaveKeyNode( wormSys, radius, padding );
+				newNode = this.CreateNextCrystalCaveKeyNode( wormSys, radius, nodeSpacing );
 			}
 
 			return newNode;
 		}
 
 
-		protected virtual WormNode CreateNextCrystalCaveKeyNode( WormSystemGen wormSys, int radius, int padding ) {
+		protected virtual WormNode CreateNextCrystalCaveKeyNode( WormSystemGen wormSys, int radius, int nodeSpacing ) {
 			int tests = 14;
 			int tilePadding = 8;
 
 			WormNode currNode = this.KeyNodes[ this.KeyNodes.Count - 1 ];
 
-			var testNodes = this.CreateTestNodes( tests, radius, padding, currNode );
+			var testNodes = this.CreateTestNodes( tests, radius, nodeSpacing, currNode );
 
 			WormNode bestNode = null;
 			float prevGauged = -1f;
@@ -42,11 +42,11 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		protected virtual IList<WormNode> CreateTestNodes( int count, int radius, int padding, WormNode currNode ) {
+		protected virtual IList<WormNode> CreateTestNodes( int count, int radius, int nodeSpacing, WormNode currNode ) {
 			var testNodes = new List<WormNode>( count );
 
 			for( int i = 0; i < count; i++ ) {
-				WormNode testNode = this.CreateTestNode( currNode, radius, padding );
+				WormNode testNode = this.CreateTestNode( currNode, radius, nodeSpacing );
 				testNodes.Add( testNode );
 			}
 

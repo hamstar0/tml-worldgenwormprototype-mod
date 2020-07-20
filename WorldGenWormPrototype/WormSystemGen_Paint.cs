@@ -10,12 +10,18 @@ namespace WorldGenWormPrototype {
 			float progressUnit = (float)thisProgress / (float)this.Nodes.Count;
 
 			for( int i = 0; i < this.Nodes.Count; i++ ) {
-				this.Nodes[i].Paint( r => r * 2, this.PaintTileOuter );
+				this.Nodes[i].Paint(
+					r => Math.Max( r * 2, 16 ),
+					this.PaintTileOuter
+				);
 				progress.Value += progressUnit * 0.5f;
 			}
 
 			for( int i = 0; i < this.Nodes.Count; i++ ) {
-				this.Nodes[i].Paint( r => r, this.PaintTileInner );
+				this.Nodes[i].Paint(
+					r => r,
+					this.PaintTileInner
+				);
 				progress.Value += progressUnit * 0.5f;
 			}
 		}
@@ -23,8 +29,8 @@ namespace WorldGenWormPrototype {
 
 		////////////////
 
-		protected abstract bool PaintTileInner( int i, int j );
+		protected abstract bool PaintTileInner( int i, int j, float percToEdge );
 
-		protected abstract bool PaintTileOuter( int i, int j );
+		protected abstract bool PaintTileOuter( int i, int j, float percToEdge );
 	}
 }

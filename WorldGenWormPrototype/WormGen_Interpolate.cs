@@ -1,11 +1,20 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Terraria;
 
 
 namespace WorldGenWormPrototype {
 	public abstract partial class WormGen : IEnumerable<WormNode> {
+		public static double Lerp( double y1, double y2, double mu ) {
+			double mu2;
+
+			mu2 = (1 - Math.Cos(mu * Math.PI)) / 2;
+			return y1 * (1 - mu2) + y2 * mu2;
+		}
+
+
+
+		////////////////
+
 		public IList<WormNode> CreateInterpolatedNodesFromRecentNodes() {
 			var nodes = new List<WormNode>();
 			if( this.KeyNodes.Count < 2 ) {
@@ -29,8 +38,8 @@ namespace WorldGenWormPrototype {
 				double perc = i / dist;
 				int x = prevNode.TileX + (int)(xDist * perc);
 				int y = prevNode.TileY + (int)(yDist * perc);
-				int rad = (int)MathHelper.Lerp( (float)prevNode.TileRadius, (float)currNode.TileRadius, (float)perc );
-				int space = (int)MathHelper.Lerp( (float)prevNode.NodeSpacing, (float)currNode.NodeSpacing, (float)perc );
+				int rad = (int)WormGen.Lerp( (double)prevNode.TileRadius, (double)currNode.TileRadius, (double)perc );
+				int space = (int)WormGen.Lerp( (double)prevNode.NodeSpacing, (double)currNode.NodeSpacing, (double)perc );
 
 				nodes.Add( new WormNode(x, y, rad, space, this) );
 			}
