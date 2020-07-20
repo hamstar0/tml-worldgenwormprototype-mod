@@ -17,27 +17,27 @@ namespace WorldGenWormPrototype {
 		}
 
 
-		protected override void CalculateNextRadiusAndNodeSpacing( out int radius, out int padding ) {
+		protected override void CalculateNextRadiusAndNodeSpacing( out int radius, out int nodeSpacing ) {
 			int startRange = this.StartNodeCount;   //2
 			int endRange = this.EndNodeCount;   //5
 			int remainingNodes = this.TotalNodes - this.KeyNodes.Count;
 
-			padding = WorldGen.genRand.Next( this.MinRadius, this.MaxRadius );
-
+			nodeSpacing = WorldGen.genRand.Next( this.MinRadius, this.MaxRadius );
+			
+			// taper at end
 			if( this.KeyNodes.Count >= (this.TotalNodes - endRange) ) {
-				float radStep = this.MinRadius / (float)remainingNodes;
+				float radStep = (float)this.MinRadius / (float)remainingNodes;
 				int steps = (endRange + 1) - remainingNodes;
 
-				radius = this.MinRadius - (int)( radStep * (float)steps );  // taper
+				radius = this.MinRadius - (int)(radStep * (float)steps);  // taper
 				return;
 			}
 
+			// start fat
 			if( startRange > 0 && this.KeyNodes.Count == 0 ) {
-				float startMinRadScale = (float)startRange * 0.75f;
-
 				radius = WorldGen.genRand.Next( // start fat
-					(int)( (float)this.MaxRadius * startMinRadScale ),
-					(int)( (float)this.MaxRadius * startMinRadScale * 2f )
+					(int)( (float)this.MaxRadius * 1.25f ),
+					(int)( (float)this.MaxRadius * 2f )
 				);
 				radius /= this.KeyNodes.Count + 1;
 				return;
@@ -49,11 +49,11 @@ namespace WorldGenWormPrototype {
 				float step = (float)(max - min) / (float)startRange;
 
 				radius = max - (int)(step * this.KeyNodes.Count);
-				padding = radius;
+				nodeSpacing = radius;
 				return;
 			}
 
-			radius = padding;
+			radius = nodeSpacing;
 		}
 
 

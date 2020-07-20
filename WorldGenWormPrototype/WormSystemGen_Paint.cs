@@ -10,6 +10,10 @@ namespace WorldGenWormPrototype {
 			float progressUnit = (float)thisProgress / (float)this.Nodes.Count;
 
 			for( int i = 0; i < this.Nodes.Count; i++ ) {
+				if( this.Nodes[i].TileRadius <= 1 ) {
+					continue;
+				}
+
 				this.Nodes[i].Paint(
 					r => Math.Max( r * 2, 16 ),
 					this.PaintTileOuter
@@ -18,6 +22,10 @@ namespace WorldGenWormPrototype {
 			}
 
 			for( int i = 0; i < this.Nodes.Count; i++ ) {
+				if( this.Nodes[i].TileRadius <= 1 ) {
+					continue;
+				}
+
 				this.Nodes[i].Paint(
 					r => r,
 					this.PaintTileInner

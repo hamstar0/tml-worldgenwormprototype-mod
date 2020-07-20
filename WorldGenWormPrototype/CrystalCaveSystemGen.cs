@@ -6,7 +6,7 @@ using Terraria.World.Generation;
 
 namespace WorldGenWormPrototype {
 	public partial class CrystalCaveSystemGen : WormSystemGen {
-		public const int MinimumLength = 75;
+		public const int MinimumLength = 75 + 1;
 		public const int MaximumLength = 125;
 		public const int PuddleLength = 8;
 
@@ -15,8 +15,11 @@ namespace WorldGenWormPrototype {
 		////////////////
 
 		public static CrystalCaveSystemGen Create( GenerationProgress progress, float thisProgress, int tileX, int tileY ) {
-			int totalLength = WorldGen.genRand.Next( CrystalCaveSystemGen.MinimumLength, CrystalCaveSystemGen.MaximumLength );
-			int len1 = WorldGen.genRand.Next( 50, totalLength - 50 );
+			int totalLength = WorldGen.genRand.Next(
+				CrystalCaveSystemGen.MinimumLength,
+				CrystalCaveSystemGen.MaximumLength
+			);
+			int len1 = WorldGen.genRand.Next( 35, totalLength - 35 );
 			int len2 = totalLength - len1;
 
 			int totalForks = WorldGen.genRand.Next( 4, 8 );
@@ -52,7 +55,8 @@ namespace WorldGenWormPrototype {
 					tileX: bottomNode.TileX,
 					tileY: bottomNode.TileY,
 					length: CrystalCaveSystemGen.PuddleLength,
-					forkCount: WorldGen.genRand.Next( 2, 4 )
+					forkCount: WorldGen.genRand.Next( 2, 4 ),
+					sourceNode: bottomNode
 				)
 			};
 			return true;

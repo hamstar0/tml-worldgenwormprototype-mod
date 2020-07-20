@@ -25,13 +25,13 @@ namespace WorldGenWormPrototype {
 					GenerationProgress progress,
 					float thisProgress,
 					float postProcessProgress,
-					IList<WormGen> wormDefs ) {
-			ISet<WormGen> genWormDefs = new HashSet<WormGen>( wormDefs );
+					IList<WormGen> worms ) {
+			ISet<WormGen> wormSet = new HashSet<WormGen>( worms );
 
-			this.GenerateNodes( progress, thisProgress, genWormDefs );
+			this.GenerateNodes( progress, thisProgress, wormSet );
 
-			if( this.PostProcessNodes(progress, postProcessProgress, out genWormDefs) ) {
-				this.GenerateNodes( progress, postProcessProgress, genWormDefs );
+			if( this.PostProcessNodes(progress, postProcessProgress, out wormSet) ) {
+				this.GenerateNodes( progress, postProcessProgress, wormSet );
 			}
 		}
 
@@ -42,9 +42,9 @@ namespace WorldGenWormPrototype {
 			float progStep = thisProgress / (float)maxNodes;
 
 			do {
-				foreach( WormGen wormDef in worms.ToArray() ) {
-					if( !wormDef.GenerateNextKeyNode(this, out WormGen fork) ) {
-						worms.Remove( wormDef );
+				foreach( WormGen worm in worms.ToArray() ) {
+					if( !worm.GenerateNextKeyNode(this, out WormGen fork) ) {
+						worms.Remove( worm );
 						continue;
 					}
 
@@ -52,7 +52,7 @@ namespace WorldGenWormPrototype {
 						worms.Add( fork );
 					}
 
-					IList<WormNode> interpNodes = wormDef.CreateInterpolatedNodesFromRecentNodes();
+					IList<WormNode> interpNodes = worm.CreateInterpolatedNodesFromRecentNodes();
 					if( interpNodes.Count > 0 ) {
 						this.Nodes = this.Nodes.Union( interpNodes ).ToList();
 					}

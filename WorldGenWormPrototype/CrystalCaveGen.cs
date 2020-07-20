@@ -18,7 +18,8 @@ namespace WorldGenWormPrototype {
 			var randForks = new List<WormGen>( forkCount );
 
 			for( int i=0; i<forkCount; i++ ) {
-				int randLen = WorldGen.genRand.Next( length/8, length/4 );
+				int randLen = WorldGen.genRand.Next( length/6, length/3 );
+
 				var fork = new CrystalCaveGen(
 					tileX: 0,
 					tileY: 0,
@@ -26,8 +27,8 @@ namespace WorldGenWormPrototype {
 					forks: new List<WormGen>(),
 					minRadius: CrystalCaveGen.MinNormalRadius,
 					maxRadius: CrystalCaveGen.MaxNormalRadius,
-					startNodeCount: 0,
-					endNodeCount: CrystalCaveGen.NodeRangeOfEnd
+					starterNodeCount: 0,
+					finisherNodeCount: CrystalCaveGen.NodeRangeOfEnd
 				);
 
 				randForks.Add( fork );
@@ -40,8 +41,8 @@ namespace WorldGenWormPrototype {
 				forks: randForks,
 				minRadius: CrystalCaveGen.MinNormalRadius,
 				maxRadius: CrystalCaveGen.MaxNormalRadius,
-				startNodeCount: CrystalCaveGen.NodeRangeOfStart,
-				endNodeCount: CrystalCaveGen.NodeRangeOfEnd
+				starterNodeCount: CrystalCaveGen.NodeRangeOfStart,
+				finisherNodeCount: CrystalCaveGen.NodeRangeOfEnd
 			);
 		}
 
@@ -65,13 +66,13 @@ namespace WorldGenWormPrototype {
 					IList<WormGen> forks,
 					int minRadius,
 					int maxRadius,
-					int startNodeCount,
-					int endNodeCount )
+					int starterNodeCount,
+					int finisherNodeCount )
 					: base( tileX, tileY, length, forks ) {
 			this.MinRadius = minRadius;
 			this.MaxRadius = maxRadius;
-			this.StartNodeCount = startNodeCount;
-			this.EndNodeCount = endNodeCount;
+			this.StartNodeCount = starterNodeCount;
+			this.EndNodeCount = finisherNodeCount;
 		}
 	}
 }
