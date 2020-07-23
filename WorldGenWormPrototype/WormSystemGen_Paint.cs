@@ -32,6 +32,8 @@ namespace WorldGenWormPrototype {
 				);
 				progress.Value += progressUnit * 0.5f;
 			}
+
+			this.PostProcessPaintedNodes();
 		}
 
 
@@ -40,5 +42,10 @@ namespace WorldGenWormPrototype {
 		protected abstract bool PaintTileInner( int i, int j, float percToEdge );
 
 		protected abstract bool PaintTileOuter( int i, int j, float percToEdge );
+
+
+		////////////////
+
+		protected virtual void PostProcessPaintedNodes( ) { }
 	}
 }

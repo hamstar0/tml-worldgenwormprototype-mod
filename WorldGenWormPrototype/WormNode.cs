@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Terraria;
 
 
@@ -8,6 +10,9 @@ namespace WorldGenWormPrototype {
 		public int TileY;
 		public int TileRadius;
 		public int NodeSpacing;
+
+		public IDictionary<int, ISet<int>> PaintedTiles = new ConcurrentDictionary<int, ISet<int>>();
+		public IDictionary<int, ISet<int>> PaintedTileEdges = new ConcurrentDictionary<int, ISet<int>>();
 
 		protected WormGen Parent;
 
@@ -58,6 +63,11 @@ namespace WorldGenWormPrototype {
 						float perc = (float)distSqr / (float)radSqr;
 
 						if( painter(i, j, perc) ) {
+							if( !this.PaintedTiles.ContainsKey(i) ) {
+								this.PaintedTiles[i] = new HashSet<int>();
+							}
+							this.PaintedTiles[i].Add( j );
+
 							this.Parent.PostPaintTile( this, i, j );
 						}
 					}
