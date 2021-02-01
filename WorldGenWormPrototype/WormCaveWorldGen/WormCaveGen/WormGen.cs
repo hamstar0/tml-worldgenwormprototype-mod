@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using Terraria;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
 	public abstract partial class WormGen : IEnumerable<WormNode> {
 		protected IList<WormNode> KeyNodes = new List<WormNode>();
 

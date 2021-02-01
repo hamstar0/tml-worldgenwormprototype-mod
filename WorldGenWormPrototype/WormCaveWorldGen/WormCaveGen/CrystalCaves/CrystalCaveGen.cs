@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	public partial class CrystalCaveGen : WormGen {
 		public const int MinNormalRadius = 3;
 		public const int MaxNormalRadius = 10;

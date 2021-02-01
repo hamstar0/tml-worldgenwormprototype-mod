@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	public partial class CrystalCaveGen : WormGen {
 		protected override WormNode CreateKeyNode( WormSystemGen wormSys ) {
 			this.CalculateNextRadiusAndNodeSpacing( out int radius, out int nodeSpacing );

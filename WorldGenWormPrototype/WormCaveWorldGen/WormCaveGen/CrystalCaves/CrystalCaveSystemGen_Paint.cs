@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	public partial class CrystalCaveSystemGen : WormSystemGen {
 		protected override bool PaintTileInner( int i, int j, float percToEdge ) {
 			Tile t = Framing.GetTileSafely( i, j );

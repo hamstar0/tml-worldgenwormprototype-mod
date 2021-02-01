@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	public partial class CrystalCavePuddleGen : CrystalCaveGen {
 		public static CrystalCavePuddleGen Create(
 					WormNode sourceNode,

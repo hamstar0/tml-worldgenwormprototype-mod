@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.World.Generation;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	public partial class CrystalCaveSystemGen : WormSystemGen {
 		public const int MinimumLength = 75 + 1;
 		public const int MaximumLength = 125;

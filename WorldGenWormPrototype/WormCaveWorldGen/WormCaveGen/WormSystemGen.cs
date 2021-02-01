@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.World.Generation;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
 	public abstract partial class WormSystemGen : IEnumerable<WormNode> {
 		public int NodeCount => this.Nodes.Count;
 

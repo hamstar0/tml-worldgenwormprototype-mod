@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
 	public abstract partial class WormGen : IEnumerable<WormNode> {
 		public static double Lerp( double y1, double y2, double mu ) {
 			double mu2;

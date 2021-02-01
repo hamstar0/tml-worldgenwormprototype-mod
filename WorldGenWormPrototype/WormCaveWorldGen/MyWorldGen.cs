@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.World.Generation;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen {
 	public partial class WormGenPass : GenPass {
 		public delegate WormNode WormNodeGenerator( IList<WormNode> nodes, int maxNodes, int originTileX, int originTileY );
 

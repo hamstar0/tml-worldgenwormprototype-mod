@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 
 
-namespace WorldGenWormPrototype {
+namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
 	public class WormNode {
 		public int TileX;
 		public int TileY;
