@@ -5,6 +5,9 @@ using Terraria.World.Generation;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
+	/// <summary>
+	/// Generates a crystal cave system; a type of worm gen. Uses `Create` as its primary factory method.
+	/// </summary>
 	public partial class CrystalCaveSystemGen : WormSystemGen {
 		public const int MinimumLength = 75 + 1;
 		public const int MaximumLength = 125;
@@ -14,7 +17,11 @@ namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 
 		////////////////
 
-		public static CrystalCaveSystemGen Create( GenerationProgress progress, float thisProgress, int tileX, int tileY ) {
+		public static CrystalCaveSystemGen Create(
+					GenerationProgress progress,
+					float thisProgress,
+					int tileX,
+					int tileY ) {
 			int totalLength = WorldGen.genRand.Next(
 				CrystalCaveSystemGen.MinimumLength,
 				CrystalCaveSystemGen.MaximumLength

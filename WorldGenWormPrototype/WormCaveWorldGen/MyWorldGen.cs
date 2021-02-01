@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.World.Generation;
+using WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen;
+using WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen {

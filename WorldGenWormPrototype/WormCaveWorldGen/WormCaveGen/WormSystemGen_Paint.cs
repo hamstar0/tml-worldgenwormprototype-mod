@@ -5,6 +5,10 @@ using Terraria.World.Generation;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
+	/// <summary>
+	/// Generates all of the data of a worm cave system, painting it finally into the world when `PaintNodes` is
+	/// called.
+	/// </summary>
 	public abstract partial class WormSystemGen : IEnumerable<WormNode> {
 		public void PaintNodes( GenerationProgress progress, float thisProgress ) {
 			float progressUnit = (float)thisProgress / (float)this.Nodes.Count;

@@ -4,6 +4,10 @@ using Terraria;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
+	/// <summary>
+	/// Represents a crystal cave worm gen cave path (and its associated forks). Uses `Create` as its primary
+	/// factory method.
+	/// </summary>
 	public partial class CrystalCaveGen : WormGen {
 		public const int MinNormalRadius = 3;
 		public const int MaxNormalRadius = 10;

@@ -6,6 +6,9 @@ using Terraria;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
+	/// <summary>
+	/// Represents a worm cave path and its associated forks (separate, branching WormGen cave paths).
+	/// </summary>
 	public abstract partial class WormGen : IEnumerable<WormNode> {
 		protected IList<WormNode> KeyNodes = new List<WormNode>();
 

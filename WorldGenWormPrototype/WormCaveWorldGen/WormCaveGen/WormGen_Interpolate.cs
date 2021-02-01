@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
+	/// <summary>
+	/// Represents a worm cave path and its associated forks (separate, branching WormGen cave paths).
+	/// </summary>
 	public abstract partial class WormGen : IEnumerable<WormNode> {
 		public static double Lerp( double y1, double y2, double mu ) {
 			double mu2;

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
+	/// <summary>
+	/// Represents a crystal cave worm gen cave path (and its associated forks). Uses `Create` as its primary
+	/// factory method.
+	/// </summary>
 	public partial class CrystalCaveGen : WormGen {
 		protected override WormNode CreateKeyNode( WormSystemGen wormSys ) {
 			this.CalculateNextRadiusAndNodeSpacing( out int radius, out int nodeSpacing );

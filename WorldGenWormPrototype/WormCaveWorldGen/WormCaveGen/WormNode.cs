@@ -5,6 +5,10 @@ using Terraria;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
+	/// <summary>
+	/// A specific node within a worm cave system. Generates a node as a sphere when called to `Paint` itself
+	/// into the world.
+	/// </summary>
 	public class WormNode {
 		public int TileX;
 		public int TileY;

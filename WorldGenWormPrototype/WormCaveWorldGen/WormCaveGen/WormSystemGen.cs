@@ -7,6 +7,10 @@ using Terraria.World.Generation;
 
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
+	/// <summary>
+	/// Generates all of the data of a worm cave system, painting it finally into the world when `PaintNodes` is
+	/// called.
+	/// </summary>
 	public abstract partial class WormSystemGen : IEnumerable<WormNode> {
 		public int NodeCount => this.Nodes.Count;
 
@@ -26,12 +30,12 @@ namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen {
 					float thisProgress,
 					float postProcessProgress,
 					IList<WormGen> worms ) {
-			ISet<WormGen> wormSet = new HashSet<WormGen>( worms );
+			ISet<WormGen> wormGenSet = new HashSet<WormGen>( worms );
 
-			this.GenerateNodes( progress, thisProgress, wormSet );
+			this.GenerateNodes( progress, thisProgress, wormGenSet );
 
-			if( this.PostProcessNodes(progress, postProcessProgress, out wormSet) ) {
-				this.GenerateNodes( progress, postProcessProgress, wormSet );
+			if( this.PostProcessNodes(progress, postProcessProgress, out wormGenSet) ) {
+				this.GenerateNodes( progress, postProcessProgress, wormGenSet );
 			}
 		}
 
