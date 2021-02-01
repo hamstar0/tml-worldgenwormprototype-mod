@@ -6,7 +6,8 @@ using Terraria.World.Generation;
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	/// <summary>
-	/// Generates a crystal cave system; a type of worm gen. Uses `Create` as its primary factory method.
+	/// Represents a crystal cave system; a type of worm cave system world gen. Uses `Create` as its primary
+	/// factory method.
 	/// </summary>
 	public partial class CrystalCaveSystemGen : WormSystemGen {
 		public const int MinimumLength = 75 + 1;

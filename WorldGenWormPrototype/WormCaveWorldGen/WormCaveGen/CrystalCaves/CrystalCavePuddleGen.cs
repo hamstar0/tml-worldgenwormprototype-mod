@@ -5,8 +5,8 @@ using Terraria;
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	/// <summary>
-	/// Represents a crystal cave "puddle" worm gen cave path (and its associated forks). Uses `Create` as its
-	/// primary factory method.
+	/// Represents a crystal cave "puddle" cave path (and its associated forks). Uses `Create` as its primary
+	/// factory method.
 	/// </summary>
 	public partial class CrystalCavePuddleGen : CrystalCaveGen {
 		public static CrystalCavePuddleGen Create(

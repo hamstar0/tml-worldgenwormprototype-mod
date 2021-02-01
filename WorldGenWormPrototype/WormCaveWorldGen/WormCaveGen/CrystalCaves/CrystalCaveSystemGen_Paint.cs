@@ -5,7 +5,8 @@ using Terraria.ID;
 
 namespace WorldGenWormPrototype.WormCaveWorldGen.WormCaveGen.CrystalCaves {
 	/// <summary>
-	/// Generates a crystal cave system; a type of worm gen. Uses `Create` as its primary factory method.
+	/// Represents a crystal cave system; a type of worm cave system world gen. Uses `Create` as its primary
+	/// factory method.
 	/// </summary>
 	public partial class CrystalCaveSystemGen : WormSystemGen {
 		protected override bool PaintTileInner( int i, int j, float percToEdge ) {
